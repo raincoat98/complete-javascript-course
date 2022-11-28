@@ -3,7 +3,7 @@
 ///////////////////////////////////////
 // Constructor Functions and the new Operator
 
-const Person = function (firstName, birthYear) {
+/* const Person = function (firstName, birthYear) {
   // Instance properties
   this.firstName = firstName;
   this.birthYear = birthYear;
@@ -26,11 +26,11 @@ const matilda = new Person('Matilda', 2017);
 const jack = new Person('Jack', 1975);
 
 console.log(jonas instanceof Person);
-
+ */
 ///////////////////////////////////////
 // Prototypes
 
-Person.prototype.calcAge = function () {
+/* Person.prototype.calcAge = function () {
   console.log(2037 - this.birthYear);
 };
 
@@ -47,3 +47,24 @@ console.log(jonas.species, matilda.species);
 
 console.log(jonas.hasOwnProperty('firstName'));
 console.log(jonas.hasOwnProperty('species'));
+
+console.log(jonas.__proto__);
+console.log(jonas.__proto__.__proto__);
+
+console.log(Person.prototype.constructor);
+
+const arr = [3, 6, 6, 5, 6, 9, 9]; // new Array === []
+console.log(arr.__proto__);
+console.log(arr.__proto__ === Array.prototype);
+
+console.log(arr.__proto__.__proto__);
+
+Array.prototype.unique = function () {
+  return [...new Set(this)];
+};
+
+console.log(arr.unique());
+
+const h1 = document.querySelector('h1');
+console.dir(x => x + 1);
+ */
