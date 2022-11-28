@@ -3,7 +3,7 @@
 ///////////////////////////////////////
 // Constructor Functions and the new Operator
 
-/* const Person = function (firstName, birthYear) {
+const Person = function (firstName, birthYear) {
   // Instance properties
   this.firstName = firstName;
   this.birthYear = birthYear;
@@ -22,15 +22,21 @@ console.log(jonas);
 // 3. {} linked to prototype
 // 4. function automatically return {}
 
+Person.hey = function () {
+  console.log('Hey there 🙌');
+};
+
+Person.hey();
+
 const matilda = new Person('Matilda', 2017);
 const jack = new Person('Jack', 1975);
 
 console.log(jonas instanceof Person);
- */
+
 ///////////////////////////////////////
 // Prototypes
 
-/* Person.prototype.calcAge = function () {
+Person.prototype.calcAge = function () {
   console.log(2037 - this.birthYear);
 };
 
@@ -67,7 +73,6 @@ console.log(arr.unique());
 
 const h1 = document.querySelector('h1');
 console.dir(x => x + 1);
- */
 
 ///////////////////////////////////////
 // Coding Challenge #1
@@ -140,6 +145,12 @@ class PersonCl {
   get fullName() {
     return this._fullName;
   }
+
+  // Static method
+  static hey() {
+    console.log('Hey there 👋');
+    console.log(this);
+  }
 }
 
 const jessica = new PersonCl('Jessica Davis', 1996);
@@ -157,8 +168,12 @@ jessica.greet();
 //3. Classes are executed in stritc mode
 
 const walter = new PersonCl('Walter White', 1965);
-console.log(walter);
-const account = {
+PersonCl.hey();
+// jessica.Hey();
+
+///////////////////////////////////////
+// Setters and Getters
+/* const account = {
   owner: 'Jonas',
   movements: [200, 530, 120, 300],
   get latest() {
@@ -173,4 +188,4 @@ console.log(account);
 console.log(account.latest);
 
 account.latest = 50;
-console.log(account.movements);
+console.log(account.movements); */
