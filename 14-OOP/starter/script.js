@@ -106,3 +106,41 @@ BMW.accelerate();
 BMW.accelerate();
 BMW.brake();
 BMW.accelerate(); */
+
+///////////////////////////////////////
+// ES6 Classes
+
+// Class expression
+// const PersonCl = class {};
+
+//class declaration
+class PersonCl {
+  constructor(firstName, birthYear) {
+    (this.firstName = firstName), (this.birthYear = birthYear);
+  }
+
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hey ${this.fullName}`);
+  }
+}
+
+console.log(PersonCl);
+
+const jessica = new PersonCl('Jessica', 1996);
+console.log(jessica);
+jessica.calcAge();
+
+console.log(jessica.__proto__);
+
+// PersonCl.prototype.greet = function () {
+//   console.log(`Hey ${this.firstName}`);
+// };
+jessica.greet();
+
+//1. Classes are NOT hoisted
+//2. Classes are first-class citizes mode
+//3. Classes are executed in stritc mode
