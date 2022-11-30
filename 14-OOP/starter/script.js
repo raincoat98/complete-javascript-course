@@ -3,7 +3,7 @@
 ///////////////////////////////////////
 // Constructor Functions and the new Operator
 
-const Person = function (firstName, birthYear) {
+/* const Person = function (firstName, birthYear) {
   // Instance properties
   this.firstName = firstName;
   this.birthYear = birthYear;
@@ -31,12 +31,12 @@ Person.hey();
 const matilda = new Person('Matilda', 2017);
 const jack = new Person('Jack', 1975);
 
-console.log(jonas instanceof Person);
+console.log(jonas instanceof Person); */
 
 ///////////////////////////////////////
 // Prototypes
 
-Person.prototype.calcAge = function () {
+/* Person.prototype.calcAge = function () {
   console.log(2037 - this.birthYear);
 };
 
@@ -45,10 +45,10 @@ matilda.calcAge();
 
 console.log(Person.prototype.isPrototypeOf(jonas));
 console.log(Person.prototype.isPrototypeOf(matilda));
-console.log(Person.prototype.isPrototypeOf(Person));
+console.log(Person.prototype.isPrototypeOf(Person)); */
 
 // .prototyeOfLinkedObjects
-Person.prototype.species = 'Homo Sapiens';
+/* Person.prototype.species = 'Homo Sapiens';
 console.log(jonas.species, matilda.species);
 
 console.log(jonas.hasOwnProperty('firstName'));
@@ -72,7 +72,7 @@ Array.prototype.unique = function () {
 console.log(arr.unique());
 
 const h1 = document.querySelector('h1');
-console.dir(x => x + 1);
+console.dir(x => x + 1); */
 
 ///////////////////////////////////////
 // Coding Challenge #1
@@ -119,7 +119,7 @@ BMW.accelerate(); */
 // const PersonCl = class {};
 
 //class declaration
-class PersonCl {
+/* class PersonCl {
   constructor(fullName, birthYear) {
     (this.fullName = fullName), (this.birthYear = birthYear);
   }
@@ -170,7 +170,7 @@ jessica.greet();
 const walter = new PersonCl('Walter White', 1965);
 PersonCl.hey();
 // jessica.Hey();
-
+ */
 ///////////////////////////////////////
 // Setters and Getters
 /* const account = {
@@ -192,7 +192,7 @@ console.log(account.movements); */
 
 ///////////////////////////////////////
 // Object.create
-const PersonProto = {
+/* const PersonProto = {
   calcAge() {
     console.log(2037 - this.birthYear);
   },
@@ -214,7 +214,7 @@ console.log(steven.__proto__ === PersonProto);
 const sarah = Object.create(PersonProto);
 sarah.init('Sarah', 1979);
 sarah.calcAge();
-
+ */
 ///////////////////////////////////////
 // Coding Challenge #2
 
@@ -229,7 +229,7 @@ DATA CAR 1: 'Ford' going at 120 km/h
 GOOD LUCK 😀
 */
 
-class CarCl {
+/* class CarCl {
   constructor(make, speed) {
     this.make = make;
     this.speed = speed;
@@ -261,4 +261,42 @@ ford.accelerate();
 ford.accelerate();
 ford.brake();
 ford.speed = 50;
-console.log(ford);
+console.log(ford); */
+
+///////////////////////////////////////
+// Inheritance Between "Classes": Constructor Functions
+
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+
+const Student = function (firstName, birthYear, cource) {
+  Person.call(this, firstName, birthYear);
+  this.cource = cource;
+};
+
+//Linking prototypes
+Student.prototype = Object.create(Person.prototype);
+
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and study ${this.cource}`);
+};
+
+const mike = new Student('Mike', 2020, 'ComputerScience');
+mike.introduce();
+mike.calcAge();
+
+console.log(mike.__proto__);
+console.log(mike.__proto__.__proto__);
+
+console.log(mike instanceof Student);
+console.log(mike instanceof Person);
+console.log(mike instanceof Object);
+
+Student.prototype.constructor = Student;
+console.dir(Student.prototype.constructor);
