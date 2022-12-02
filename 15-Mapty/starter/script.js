@@ -10,3 +10,17 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
+
+if (navigator) {
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      const { latitude } = position.coords;
+      const { longitude } = position.coords;
+      console.log(latitude, longitude);
+      console.log(`https://www.google.pt/maps/@${latitude},${longitude}`);
+    },
+    function () {
+      console.log('위치 접근 불가');
+    }
+  );
+}
