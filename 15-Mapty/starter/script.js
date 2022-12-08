@@ -5,6 +5,7 @@ let map, mapEvent;
 class WorkOut {
   date = new Date();
   id = (new Date() + '').slice(-10);
+  clicks = 0;
 
   constructor(coords, distance, duration) {
     // this.date = ...
@@ -37,6 +38,10 @@ class Running extends WorkOut {
     // min/km
     this.pace = this.duration / this.distance;
     return this.pace;
+  }
+
+  click() {
+    this.clicks++;
   }
 }
 
@@ -73,6 +78,7 @@ const inputElevation = document.querySelector('.form__input--elevation');
 
 class App {
   #map;
+  #mapZoomLevel = 13;
   #mapEvent;
   #workouts = [];
 
@@ -80,6 +86,7 @@ class App {
     this._getPosition();
     form.addEventListener('submit', this._newWorkout.bind(this));
     inputType.addEventListener('change', this._toggleElevationField);
+    containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
   }
 
   _getPosition() {
@@ -257,6 +264,26 @@ class App {
     `;
 
     form.insertAdjacentHTML('afterend', html);
+  }
+
+  _moveToPopup(e) {
+    const workoutEl = e.target.closest('.workout');
+    if (!workoutEl) return;
+
+    const workout = this.#workouts.find(
+      work => work.id === workoutEl.dataset.id
+    );
+    console.log(workout);
+
+    this.#map.setView(workout.coords, this.#mapZoomLevel, {
+      animate: true,
+      pan: {
+        duration: 1,
+      },
+    });
+
+    //using the public interface
+    workout.click();
   }
 }
 
