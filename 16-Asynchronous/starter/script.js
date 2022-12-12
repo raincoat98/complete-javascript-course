@@ -41,7 +41,7 @@ getCountryData('germany');
 ///////////////////////////////////////
 // Welcome to Callback Hell
 
-const renderCountry = function (data, className = '') {
+/* const renderCountry = function (data, className = '') {
   const html = `
   <article class="country ${className}">
   <img class="country__img" src="${data.flag}" />
@@ -104,3 +104,7 @@ setTimeout(() => {
     }, 1000);
   }, 1000);
 }, 1000);
+ */
+
+const request = fetch(`https://restcountries.com/v2/name/portugal`);
+console.log(request);
