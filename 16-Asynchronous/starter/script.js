@@ -186,7 +186,7 @@ const getJSON = function (url, errorMsg = 'Something went wrong') {
 //     });
 // };
 
-const getCountryData = function (country) {
+/* const getCountryData = function (country) {
   //Country 1
 
   getJSON(`https://restcountries.com/v2/name/${country}`, 'Country not found')
@@ -210,11 +210,11 @@ const getCountryData = function (country) {
     .finally(() => {
       countriesContainer.style.opacity = 1;
     });
-};
+}; */
 
-btn.addEventListener('click', function () {
+/* btn.addEventListener('click', function () {
   getCountryData('portugal');
-});
+}); */
 // getCountryData('australia');
 
 ///////////////////////////////////////
@@ -284,7 +284,7 @@ console.log('Test end'); */
 
 ///////////////////////////////////////
 // Building a Simple Promise
-const lotteryPromise = new Promise(function (resolve, reject) {
+/* const lotteryPromise = new Promise(function (resolve, reject) {
   console.log('Lotter draw is happening');
   setTimeout(function () {
     if (Math.random() >= 0.5) {
@@ -295,10 +295,10 @@ const lotteryPromise = new Promise(function (resolve, reject) {
   }, 2000);
 });
 
-lotteryPromise.then(res => console.log(res)).catch(err => console.log(err));
+lotteryPromise.then(res => console.log(res)).catch(err => console.log(err)); */
 
 // Promisifying setTimeout
-const wait = function (seconds) {
+/* const wait = function (seconds) {
   return new Promise(function (resolve) {
     setTimeout(resolve, seconds * 1000);
   });
@@ -321,3 +321,51 @@ wait(1)
 
 Promise.resolve('abc').then(x => console.log(x));
 Promise.reject(new Error('Problem!')).catch(x => console.error(x));
+ */
+
+///////////////////////////////////////
+// Promisifying the Geolocation API
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   position => resolve(position),
+    //   err => reject(err)
+    // );
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+// getPosition().then(pos => console.log(pos));
+
+//BUG South Korea, restcountries api not found
+//BUG API 유료 전환으로 테스트 불가
+const whereAmI = function () {
+  getPosition()
+    .then(pos => {
+      const { latitude: lat, longitude: lng } = pos.coords;
+
+      return fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
+    })
+    .then(res => {
+      console.log(res);
+      if (!res.ok) throw new Error(`Problem with geocoding ${res.status}`);
+      return res.json();
+    })
+    .then(data => {
+      console.log(data);
+      console.log(`You are in ${data.city}, ${data.country}`);
+      return fetch(`https://restcountries.com/v2/name/${data.country}`);
+    })
+    .then(res => {
+      if (!res.ok) throw new Error(`Country not found (${res.status})`);
+
+      return res.json();
+    })
+    .then(data => {
+      console.log(data);
+      return renderCountry(data[0]);
+    })
+    .catch(err => console.error(`${err.message} 💥`));
+};
+
+btn.addEventListener('click', whereAmI);
