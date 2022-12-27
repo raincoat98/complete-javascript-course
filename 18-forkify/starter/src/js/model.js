@@ -27,5 +27,6 @@ export const laodRecipe = async function (id) {
   } catch (err) {
     //Temp error
     console.error(`${err} 😡😡😡😡😡`);
+    throw err;
   }
 };
